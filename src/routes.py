@@ -10,6 +10,7 @@ def hello_world():
 def about():
     return 'about!'
 
+
 @app.route('/contacts')
 def contacts():
     return 'contact!'
