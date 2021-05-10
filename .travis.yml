@@ -11,4 +11,5 @@ install:
 script:
   - pytest "tests/"
   - coverage run --source="src/" -m pytest
+  - coverage report
   - pycodestyle src/ --ignore=E722,E501,E402
