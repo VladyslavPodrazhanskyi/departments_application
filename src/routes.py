@@ -9,3 +9,7 @@ def hello_world():
 @app.route('/about')
 def about():
     return 'about!'
+
+@app.route('/contacts')
+def contacts():
+    return 'contact!'
