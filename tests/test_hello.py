@@ -1,6 +1,6 @@
 import http
 
-from app import app
+from src import app
 
 
 def test_hello():
