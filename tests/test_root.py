@@ -9,7 +9,7 @@ def test_hello():
     assert resp.status_code == http.HTTPStatus.OK
 
 
-def test_about():
-    client = app.test_client()
-    resp = client.get('/about')
-    assert resp.status_code == http.HTTPStatus.OK
+# def test_about():
+#     client = app.test_client()
+#     resp = client.get('/about')
+#     assert resp.status_code == http.HTTPStatus.OK
