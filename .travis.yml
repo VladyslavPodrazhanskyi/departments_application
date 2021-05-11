@@ -4,12 +4,21 @@ python:
 
 before_install:
   - pip install pycodestyle
+  - pip install codecov
 
+# install dependencies
 install:
   - pip install -r requirements.txt
 
 script:
+  - coverage erase
   - pytest "tests/"
-  - coverage run --source="src/" -m pytest
+  - coverage run --source="src/" -m pytest && coverage html
   - coverage report
+# check style
   - pycodestyle src/ --ignore=E722,E501,E402
+  - pylint --output-format=text wsgi.py
+
+after_success:
+  - codecov
+
