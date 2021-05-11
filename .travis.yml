@@ -17,7 +17,7 @@ script:
   - coverage report
 # check style
   - pycodestyle src/ --ignore=E722,E501,E402
-  - pylint --output-format=text wsgi.py
+#  - pylint --output-format=text wsgi.py
 
 after_success:
   - codecov
