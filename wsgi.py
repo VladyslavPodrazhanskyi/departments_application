@@ -1,4 +1,5 @@
-from src import app
+from src import manager
+
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    manager.run()
