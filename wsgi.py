@@ -1,5 +1,11 @@
-from src import manager
+import os
+
+from src import create_app
 
 
-if __name__ == '__main__':
-    manager.run()
+app = create_app(os.getenv('FLASK_CONFIG') or 'default')
+
+
+#
+# if __name__ == '__main__':
+#     app.run()
