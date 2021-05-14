@@ -2,6 +2,7 @@ import unittest
 from flask import current_app
 from src import create_app
 
+
 class BasicTestCase(unittest.TestCase):
     def setUp(self):
         self.app = create_app('testing')
@@ -15,7 +16,8 @@ class BasicTestCase(unittest.TestCase):
         self.assertFalse(current_app is None)
 
     def test_app_is_testing(self):
-        self.assertTrue(current_app.config['TESTING']) # ??? testing
+        self.assertTrue(current_app.config['TESTING'])  # ??? testing
 
 
-
+if __name__ == '__main__':
+    unittest.main(verbosity=2)
