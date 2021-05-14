@@ -3,7 +3,7 @@ import http
 # from wsgi import app
 from src import create_app
 
-app = app = create_app('testing')
+app = create_app('testing')
 client = app.test_client()
 
 
