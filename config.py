@@ -1,6 +1,9 @@
 import os
+from dotenv import load_dotenv
 
 basedir = os.path.abspath(os.path.dirname(__file__))
+
+load_dotenv(os.path.join(basedir, '.flaskenv'))
 
 
 class Config:
@@ -8,22 +11,17 @@ class Config:
                  b'\x16\xf2hz\x07\xf4<\xbb"\x8d,\xf9*a\x0bg\n`\xe4\x0fG\xb4@\xf0'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    @staticmethod
-    def init_app(app):
-        pass
-
 
 class DevelopmentConfig(Config):
-    DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URI') or \
                               'sqlite:///' + os.path.join(basedir, 'data/dev_db')
 
 
 class TestingConfig(Config):
     TESTING = True
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL') or \
-                              'sqlite:///' + os.path.join(basedir, 'data/test_db')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URI') or \
+                              'sqlite:///' + os.path.join(basedir, 'tests/test_db')
     WTF_CSRF_ENABLED = False
 
 
@@ -31,15 +29,15 @@ class ProductionConfig(Config):
     pass
 
 
-class DevelopmentWinPostgres(Config):
-    DEBUG = True
-    PG_USER = "postgres"
-    PG_PASSWORD = "krpp1"
-    PG_HOST = "localhost"
-    PG_PORT = 5432
-    DB_NAME = "company_db"
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
-                              f"postgresql://{PG_USER}:{PG_PASSWORD}@{PG_HOST}:{PG_PORT}/{DB_NAME}"
+# class DevelopmentWinPostgres(Config):
+#     DEBUG = True
+#     PG_USER = "postgres"
+#     PG_PASSWORD = "krpp1"
+#     PG_HOST = "localhost"
+#     PG_PORT = 5432
+#     DB_NAME = "company_db"
+#     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
+#                               f"postgresql://{PG_USER}:{PG_PASSWORD}@{PG_HOST}:{PG_PORT}/{DB_NAME}"
 
 
 # class DevelopmentPostgres(Config):
