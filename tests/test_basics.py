@@ -12,8 +12,6 @@ class BasicTestCase(unittest.TestCase):
         self.app_context.push()
         db.create_all()
 
-
-
     def tearDown(self):
         db.session.remove()
         db.drop_all()
@@ -22,17 +20,14 @@ class BasicTestCase(unittest.TestCase):
     def test_app_exists(self):
         self.assertFalse(current_app is None)
 
-
     def test_app_is_testing(self):
         self.assertTrue(current_app.config['TESTING'])  # ??? testing
-
 
     def test_dep_is_added(self):
         department = Department('test_dep', 'test_descr')
         db.session.add(department)
         db.session.commit()
         self.assertEqual(db.session.query(Department).filter_by(name='test_dep').first().description, 'test_descr')
-
 
 
 if __name__ == '__main__':
