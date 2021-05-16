@@ -7,11 +7,11 @@ app = create_app('testing')
 client = app.test_client()
 
 
-def test_hello():
+def test_home():
     resp = client.get('/')
     assert resp.status_code == http.HTTPStatus.OK
 
 
-def test_about():
-    resp = client.get('/about')
+def test_smoke():
+    resp = client.get('/api')
     assert resp.status_code == http.HTTPStatus.OK
