@@ -7,6 +7,11 @@ from src.models.models import Department, Employee
 
 
 def populate_departments():
+
+    d0 = Department(
+        name='Department for testing',
+        description='without employees'
+    )
     d1 = Department(
         name='Sales department',
         description='Department responsible for sales'
@@ -32,7 +37,7 @@ def populate_departments():
         description='It specialists and developers responsible for CRM system, support of corporate web resources'
     )
 
-    db.session.add_all([d1, d2, d3, d4, d5, d6])
+    db.session.add_all([d0, d1, d2, d3, d4, d5, d6])
     db.session.commit()
     db.session.close()
 

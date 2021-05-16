@@ -12,12 +12,10 @@ install:
 
 script:
   - coverage erase
-  - pytest "tests/"
-  - coverage run --source="src/" -m pytest && coverage html
+  - coverage run --source="src/" -m unittest discover -v && coverage html
   - coverage report
 # check style
   - pycodestyle src/ --ignore=E722,E501,E402
-#  - pylint --output-format=text wsgi.py
 
 after_success:
   - codecov

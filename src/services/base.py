@@ -15,6 +15,10 @@ class Base:
         return objects
 
     @classmethod
+    def get_all_uuids(cls):
+        return list(map(lambda obj: obj.uuid, cls.get_all()))
+
+    @classmethod
     def get_by_uuid(cls, uuid):
         obj = db.session.query(cls.model).filter_by(uuid=uuid).first()
         return obj

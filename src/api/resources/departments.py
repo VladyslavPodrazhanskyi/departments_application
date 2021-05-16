@@ -23,7 +23,6 @@ class DepartmentListApi(Resource):
     def post(self):
         try:
             department = self.department_schema.load(request.json, session=db.session)
-            print(request.json)
         except ValidationError as e:
             return {'message': str(e)}, 400
         DepartmentService.save_to_db(department)
