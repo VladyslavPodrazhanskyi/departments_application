@@ -12,10 +12,7 @@ from src.services.department import DepartmentService
 from src.services.employee import EmployeeService
 
 
-
 # display the employee(s)
-
-
 @employee_bp.route('/employees/<string:uuid>', methods=["GET", "POST"])
 @employee_bp.route('/employees', methods=["GET", "POST"])
 def display_employees(uuid=None):
@@ -46,7 +43,6 @@ def search_by_bd(start_date, end_date=None):
 
 
 # create employee
-
 @employee_bp.route('/create_employee', methods=["POST", "GET"])
 def create_employee():
     form = EmployeeForm()
@@ -68,7 +64,6 @@ def create_employee():
 
 
 # update the employee
-
 @employee_bp.route('/employees/<string:uuid>/update', methods=["POST", "GET"])
 def update_employee(uuid):
     employee = EmployeeService.get_by_uuid(uuid)
