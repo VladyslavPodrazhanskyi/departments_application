@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <p></p>
+        <h6>Employee search by birth date:</h6>
+        <p>Please fill form below, </p>
+        <p>you may input only start date and search the employees that were born  </p>
+        <p>on the certain date or input start and end dates andd search for the employees </p>
+        <p>that were born in the period between dates</p>
+        <p></p>
+        <form class="form-group" method="POST">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.start_date.label(class="form-control-label") }}
+                {{ form.start_date(class="form-control form-control-lg", placeholder="year-month-day")}}
+            </div>
+            <div class="form-group">
+                {{ form.end_date.label(class="form-control-label") }}
+                {{ form.end_date(class="form-control form-control-lg")}}
+            </div>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+{% endblock %}

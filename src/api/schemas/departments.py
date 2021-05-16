@@ -17,7 +17,3 @@ class DepartmentSchema(SQLAlchemyAutoSchema):
         include_fk = True
         ordered = True
         dump_only = ('uuid',)
-
-
-
-

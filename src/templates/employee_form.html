@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        {% if page == 'create' %}
+            <h4>Add employee page.</h4>
+        {% elif page == 'update' %}
+            <h4>Update employee page.</h4>
+        {% endif %}
+        <p></p>
+        <form class="form-group" method="POST">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.employee_name.label(class="form-control-label") }}
+                {{ form.employee_name(class="form-control form-control-lg")}}
+            </div>
+            <div class="form-group">
+                {{ form.birth_date.label(class="form-control-label") }}
+                {{ form.birth_date(class="form-control form-control-lg", placeholder="year-month-day")}}
+            </div>
+            <div class="form-group">
+                {{ form.salary.label(class="form-control-label") }}
+                {{ form.salary(class="form-control form-control-lg")}}
+            </div>
+            <div class="form-group">
+                {{ form.department_uuid.label(class="form-control-label") }}
+                {{ form.department_uuid(class="form-control form-control-lg")}}
+            </div>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+
+    </div>
+{% endblock %}

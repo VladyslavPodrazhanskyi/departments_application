@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="p-3 mb-2 bg-light text-dark">
+    <h6>Search employee by birth date:</h6>
+        <form  method="POST">
+        <ul class="nav">
+
+        <li class="nav-link">
+            {{ form.hidden_tag() }}
+        </li>
+        <li class="nav-link">
+            {{ form.start_date.label(class="form-control-label") }}
+            {{ form.start_date(class="form-control form-control-lg", placeholder="year-month-day")}}
+        </li>
+        <li class="nav-link">
+            {{ form.end_date.label(class="form-control-label") }}
+            {{ form.end_date(class="form-control form-control-lg", placeholder="year-month-day")}}
+        </li>
+        <li class="nav-link">
+            <br>
+            {{ form.submit(class="form-control form-control-lg") }}
+        </li>
+
+        </ul>
+        </form>
+    </div>
+    <div class="p-3 mb-2 bg-light text-dark">
+        <h4>Company Employees:</h4>
+        <ul>
+            {% for employee in employees %}
+                <li>
+                    <a href="{{ url_for('employee_bp.display_employees', uuid=employee.uuid) }}">{{ employee.employee_name }}</a>
+                    <p>Annual salary: {{ employee.salary }} USD</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+
+

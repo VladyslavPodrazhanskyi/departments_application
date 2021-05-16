@@ -12,8 +12,7 @@ class EmployeeService(Base):
             end_date = start_date
         if end_date < start_date:
             start_date, end_date = end_date, start_date
-        employees = db.session.query(cls.model).\
+        employees = db.session.query(cls.model). \
             filter(cls.model.birth_date >= start_date). \
             filter(cls.model.birth_date <= end_date).all()
         return employees
-

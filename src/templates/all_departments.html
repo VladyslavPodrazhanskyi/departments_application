@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="p-3 mb-2 bg-light text-dark"">
+        <h4>Company Departments:</h4>
+        <ul>
+            {% for department in departments %}
+                <li>
+                    <a href="{{ url_for('department_bp.display_departments', uuid=department.uuid) }}">{{ department.name }}</a>
+                    <p>Average annual salary: {{ avg_salary(department.uuid) }} USD</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+
+

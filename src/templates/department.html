@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="p-3 mb-2 bg-light text-dark"">
+        <h1>{{department.name}}</h1>
+        {% if department.description %}
+            <h6>Description: {{ department.description }}</h6>
+        {% else %}
+            <p>Description is absent now.</p>
+        {% endif %}
+        <h6>uuid: <span style="color: red">{{ department.uuid }}</span></h6>
+        <h4>Average salary: {{ avg_salary }} USD per year.</h4>
+        <hr>
+        {% if department.department_employees %}
+            <h4>List of employees:</h4>
+            <ul>
+                {% for employee in department.department_employees %}
+                    <li>
+                        <a href="{{ url_for('employee_bp.display_employees', uuid=employee.uuid) }}">{{ employee.employee_name }}</a>
+                        <p>Annual salary: {{ employee.salary }} USD</p>
+
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <h6>There is no employees in the department now.</h6>
+        {% endif %}
+        <hr>
+        <p></p>
+        <a href="{{ url_for('employee_bp.create_employee', uuid=department.uuid) }}">Add Employee</a>
+        <p></p>
+        <a href="{{ url_for('department_bp.update_department', uuid=department.uuid) }}">Update department</a>
+        <p></p>
+    <a href="{{ url_for('department_bp.del_department', uuid=department.uuid) }}"><p style="color: red" >Delete department</p></a>
+    </div>
+{% endblock %}

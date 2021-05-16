@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="p-3 mb-2 bg-light text-dark">
+    <h6>SEARCH RESULT:</h6>
+    {% if end_date %}
+        <p style="color: green">List of the employees that were born between {{ start_date }} and {{ end_date }}:</p>
+    {% else %}
+        <p style="color: green">List of the employees that were born on {{ start_date }}:</p>
+    {% endif %}
+
+    {% if employees %}
+        <ul>
+        {% for employee in employees %}
+            <li>
+                <a href="{{ url_for('employee_bp.display_employees', uuid=employee.uuid) }}">{{ employee.employee_name }}</a>
+                <p>birth date: {{ employee.birth_date }}</p>
+            </li>
+        {% endfor %}
+        </ul>
+
+    {% else %}
+        <p style="color: red">There is no employees according to your request.</p>
+    {% endif %}
+    </div>
+{% endblock %}
+
+

@@ -1,0 +1,26 @@
+from datetime import date
+
+from flask import request
+from flask_wtf import FlaskForm
+from wtforms import StringField, IntegerField, DateField, SubmitField
+from wtforms.validators import DataRequired, Optional
+
+
+class DepartmentForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+    description = StringField('Description')
+    submit = SubmitField('Submit')
+
+
+class EmployeeForm(FlaskForm):
+    employee_name = StringField('Employee_name', validators=[DataRequired()])
+    birth_date = DateField('Birth_date', validators=[DataRequired()])
+    salary = IntegerField('Salary', validators=[DataRequired()])
+    department_uuid = StringField('Department_uuid', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+
+class EmployeeSearchForm(FlaskForm):
+    start_date = DateField('Start date', validators=[DataRequired()])
+    end_date = DateField('End date', validators=[Optional()])
+    submit = SubmitField('Search')

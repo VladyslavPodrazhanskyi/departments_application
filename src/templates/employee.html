@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="p-3 mb-2 bg-light text-dark">
+        <h4>Employee: {{ employee.employee_name }}</h4>
+        <p>Date of birth: {{ employee.birth_date }}</p>
+        <p>Salary: {{ employee.salary }} USD per year.</p>
+        <p>Department: <a href="{{ url_for('department_bp.display_departments', uuid=employee.department_uuid) }}">{{ department.name }}</a></p>
+        <a href="{{ url_for('employee_bp.update_employee', uuid=employee.uuid) }}"><p>Update employee</p></a>
+        <a href="{{ url_for('employee_bp.del_employee', uuid=employee.uuid) }}"><p style="color:red">Delete employee</p></a>
+    </div>
+{% endblock %}
+
+{# add button for delete and update the employee #}
