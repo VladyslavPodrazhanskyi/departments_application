@@ -44,21 +44,6 @@ class EmployeeListApi(Resource):
         EmployeeService.save_to_db(employee)
         return self.employee_schema.dump(employee), 200
 
-    # def patch(self, uuid):
-    #     employee = db.session.query(Employee).filter_by(uuid=uuid).first()
-    #     if not employee:
-    #         return {'message': f'Employee with uuid {uuid} is not found '}, 404
-    #     employee_json = request.json
-    #     employee.employee_name = employee_json.get('employee_name', employee.employee_name)
-    #     employee.birth_date = datetime.datetime.strptime(
-    #         employee_json.get('birth_date', employee.birth_date.strftime('%Y-%m-%d')), '%Y-%m-%d'
-    #     )
-    #     employee.salary = employee_json.get('salary', employee.salary)
-    #     employee.department_uuid = employee_json.get('department_uuid', employee.department_uuid)
-    #     db.session.add(employee)
-    #     db.session.commit()
-    #     return self.employee_schema.dump(employee), 200
-
     def delete(self, uuid):
         employee = EmployeeService.get_by_uuid(uuid)
         if not employee:

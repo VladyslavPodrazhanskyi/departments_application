@@ -1,3 +1,5 @@
+from sqlalchemy.exc import IntegrityError
+
 from src import db
 
 
@@ -26,7 +28,10 @@ class Base:
     @staticmethod
     def save_to_db(obj):
         db.session.add(obj)
-        db.session.commit()
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
 
     @staticmethod
     def delete_from_db(obj):

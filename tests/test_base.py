@@ -17,10 +17,7 @@ class BasicTestCase(unittest.TestCase):
         self.department_uuids = DepartmentService.get_all_uuids()
         self.employee_uuids = EmployeeService.get_all_uuids()
 
-
     def tearDown(self):
         db.session.remove()
         db.drop_all()
         self.app_context.pop()
-
-

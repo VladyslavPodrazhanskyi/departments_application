@@ -1,17 +1,7 @@
 import http
 import json
 
-from src import db
 from tests.test_base import BasicTestCase
-from src.services.department import DepartmentService
-from src.models.models import Department
-
-
-class SmokeTestCase(BasicTestCase):
-    def test_smoke(self):
-        client = self.app.test_client()
-        resp = client.get('/api')
-        assert resp.status_code == http.HTTPStatus.OK
 
 
 class DepartmentTestCase(BasicTestCase):
@@ -75,7 +65,6 @@ class DepartmentTestCase(BasicTestCase):
         resp = client.put(url, data=json.dumps(data), content_type='application/json')
         self.assertEqual(resp.status_code, http.HTTPStatus.BAD_REQUEST)
 
-
     def test_dep_put_incorrect_uuid(self):
         client = self.app.test_client()
         url = f'/api/departments/incorrect_uuid'
@@ -89,7 +78,6 @@ class DepartmentTestCase(BasicTestCase):
     def test_delete_dep_without_employees(self):
         client = self.app.test_client()
         url = f'/api/departments/{self.department_uuids[0]}'
-        print(url)
         resp = client.delete(url)
         self.assertEqual(resp.status_code, http.HTTPStatus.NO_CONTENT)
 
@@ -105,5 +93,3 @@ class DepartmentTestCase(BasicTestCase):
         url = f'/api/departments/incorrect_uuid'
         resp = client.delete(url)
         self.assertEqual(resp.status_code, http.HTTPStatus.NOT_FOUND)
-
-
