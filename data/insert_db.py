@@ -9,8 +9,8 @@ from src.models.models import Department, Employee
 def populate_departments():
 
     d0 = Department(
-        name='Department for testing',
-        description='without employees'
+        name='Business development',
+        description='New department created to look for the customer in the new markets'
     )
     d1 = Department(
         name='Sales department',

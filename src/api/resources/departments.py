@@ -14,7 +14,7 @@ class DepartmentListApi(Resource):
     def get(self, uuid=None):
         if uuid is None:
             departments = DepartmentService.get_all()
-            return self.department_schema.dump(departments, many=True), 200
+            return {'departments': self.department_schema.dump(departments, many=True)}, 200
         department = DepartmentService.get_by_uuid(uuid)
         if not department:
             return {'message': 'object is not found '}, 404
