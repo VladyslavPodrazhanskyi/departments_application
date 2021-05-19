@@ -12,7 +12,7 @@ install:
 
 script:
   - coverage erase
-  - coverage run --source="src/" -m unittest discover -v && coverage html
+  - coverage run --source="src/" -m unittest discover tests -v && coverage html
   - coverage report
 # check style
   - pycodestyle src/ --ignore=E722,E501,E402
