@@ -7,63 +7,64 @@ from src.services.department import DepartmentService
 from src.models.models import Department
 
 
-class EmployeeTestCase(BasicTestCase):
-    def test_employee_get_without_uuid(self):
-        client = self.app.test_client()
-        url = '/api/employees/'
-        resp = client.get(url)
-        self.assertEqual(resp.status_code, http.HTTPStatus.OK)
+class EmployeeApiTestCase(BasicTestCase):
+    def test_api_employee_get(self):
+        # test get without uui
+        url_without_uuid = '/api/employees/'
+        resp = self.client.get(url_without_uuid)
+        self.assertEqual(http.HTTPStatus.OK, resp.status_code)
+        self.assertIn("employees", resp.json)
 
-    def test_employee_get_correct_uuid(self):
-        url = f'/api/employees/{self.employee_uuids[0]}'
-        client = self.app.test_client()
-        resp = client.get(url)
-        self.assertEqual(resp.status_code, http.HTTPStatus.OK)
+        # test get with correct uuid
+        url_with_correct_uuid = f'/api/employees/{self.employee_uuids[0]}'
+        resp = self.client.get(url_with_correct_uuid)
+        self.assertEqual(http.HTTPStatus.OK, resp.status_code)
+        self.assertEqual("Irina Kulikova", resp.json.get("employee_name"))
 
-    def test_employee_get_incorrect_uuid(self):
-        url = f'/api/employees/incorrect_uuid'
+        # test get with incorrect uuid
+        url_incorrect_uuid = f'/api/employees/incorrect_uuid'
         client = self.app.test_client()
-        resp = client.get(url)
-        self.assertEqual(resp.status_code, http.HTTPStatus.NOT_FOUND)
+        resp = client.get(url_incorrect_uuid)
+        self.assertEqual(http.HTTPStatus.NOT_FOUND, resp.status_code)
 
-    def test_employee_post(self):
-        client = self.app.test_client()
+    def test_api_employee_post(self):
+        # test post with correct data
+        url = '/api/employees'
         data = {
             'employee_name': 'Test employee',
             'birth_date': '2000-01-01',
             'salary': 12000,
             'department_uuid': self.department_uuids[0]
         }
-        resp = client.post('/api/employees', data=json.dumps(data), content_type='application/json')
-        self.assertEqual(resp.status_code, http.HTTPStatus.CREATED)
-        self.assertEqual(resp.json['employee_name'], 'Test employee')
-        self.assertEqual(resp.json['birth_date'], '2000-01-01')
-        self.assertEqual(resp.json['salary'], 12000)
+        resp = self.client.post(url, data=json.dumps(data), content_type='application/json')
+        self.assertEqual(http.HTTPStatus.CREATED, resp.status_code)
+        self.assertEqual('Test employee', resp.json.get('employee_name'))
+        self.assertEqual('2000-01-01', resp.json.get('birth_date'))
+        self.assertEqual(12000, resp.json.get('salary'))
 
-    def test_employee_post_incorrect_department(self):
-        client = self.app.test_client()
+        # test post with incorrect department
         data = {
             'employee_name': 'Test employee',
             'birth_date': '2000-01-01',
             'salary': 12000,
             'department_uuid': 'incorrect department'
         }
-        resp = client.post('/api/employees', data=json.dumps(data), content_type='application/json')
-        self.assertEqual(resp.status_code, http.HTTPStatus.BAD_REQUEST)
+        resp = self.client.post(url, data=json.dumps(data), content_type='application/json')
+        self.assertEqual(http.HTTPStatus.BAD_REQUEST, resp.status_code)
+        self.assertEqual("department does not exist", resp.json.get("message"))
 
-    def test_employee_post_incorrect_data(self):
-        client = self.app.test_client()
-        data = {
+        # test post with incorrect data
+        incorrect_data = {
             'incorrect field': 'Test employee',
             'birth_date': '2000-01-01',
             'salary': 12000,
             'department_uuid': self.department_uuids[0]
         }
-        resp = client.post('/api/employees', data=json.dumps(data), content_type='application/json')
-        self.assertEqual(resp.status_code, http.HTTPStatus.BAD_REQUEST)
+        resp = self.client.post(url, data=json.dumps(incorrect_data), content_type='application/json')
+        self.assertEqual(http.HTTPStatus.BAD_REQUEST, resp.status_code)
 
-    def test_employee_put_correct_uuid(self):
-        client = self.app.test_client()
+    def test_api_employee_put(self):
+        # test put with incorrect data
         url = f'/api/employees/{self.employee_uuids[0]}'
         data = {
             'employee_name': 'Updated employee',
@@ -71,56 +72,45 @@ class EmployeeTestCase(BasicTestCase):
             'salary': 15000,
             'department_uuid': self.department_uuids[1]
         }
-        resp = client.put(url, data=json.dumps(data), content_type='application/json')
-        self.assertEqual(resp.status_code, http.HTTPStatus.OK)
-        self.assertEqual(resp.json['employee_name'], 'Updated employee')
-        self.assertEqual(resp.json['birth_date'], '2010-02-02')
-        self.assertEqual(resp.json['salary'], 15000)
+        resp = self.client.put(url, data=json.dumps(data), content_type='application/json')
+        self.assertEqual(http.HTTPStatus.OK, resp.status_code)
+        self.assertEqual('Updated employee', resp.json.get('employee_name'))
+        self.assertEqual('2010-02-02', resp.json.get('birth_date'))
+        self.assertEqual(15000, resp.json.get('salary'))
 
-    def test_employee_put_incorrect_data(self):
-        client = self.app.test_client()
-        url = f'/api/employees/{self.employee_uuids[0]}'
-        data = {
+        # test put with incorrect uuid
+        incorrect_url = f'/api/employees/incorrect_uuid'
+        resp = self.client.put(incorrect_url, data=json.dumps(data), content_type='application/json')
+        self.assertEqual(http.HTTPStatus.NOT_FOUND, resp.status_code)
+
+        # test put with incorrect data
+        incorrect_data = {
             'incorrect field': 'Update',
             'birth_date': '2000-01-01',
             'salary': 12000,
             'department_uuid': self.department_uuids[0]
         }
-        resp = client.put(url, data=json.dumps(data), content_type='application/json')
-        self.assertEqual(resp.status_code, http.HTTPStatus.BAD_REQUEST)
+        resp = self.client.put(url, data=json.dumps(incorrect_data), content_type='application/json')
+        self.assertEqual(http.HTTPStatus.BAD_REQUEST, resp.status_code)
 
-    def test_employee_put_incorrect_uuid(self):
-        client = self.app.test_client()
-        url = f'/api/employees/incorrect_uuid'
-        data = {
-            'employee_name': 'Updated employee',
-            'birth_date': '2010-02-02',
-            'salary': 15000,
-            'department_uuid': self.department_uuids[1]
-        }
-        resp = client.put(url, data=json.dumps(data), content_type='application/json')
-        self.assertEqual(resp.status_code, http.HTTPStatus.NOT_FOUND)
-
-    def test_employee_put_incorrect_department(self):
-        client = self.app.test_client()
-        url = f'/api/employees/{self.employee_uuids[0]}'
+        # test put with incorrect department
         data = {
             'employee_name': 'Updated employee',
             'birth_date': '2010-02-02',
             'salary': 15000,
             'department_uuid': 'incorrect department'
         }
-        resp = client.put(url, data=json.dumps(data), content_type='application/json')
-        self.assertEqual(resp.status_code, http.HTTPStatus.BAD_REQUEST)
+        resp = self.client.put(url, data=json.dumps(data), content_type='application/json')
+        self.assertEqual(http.HTTPStatus.BAD_REQUEST, resp.status_code)
+        self.assertEqual("department does not exist", resp.json.get('message'))
 
     def test_delete_employee(self):
-        client = self.app.test_client()
+        # test delete employee with correct uuid
         url = f'/api/employees/{self.employee_uuids[0]}'
-        resp = client.delete(url)
-        self.assertEqual(resp.status_code, http.HTTPStatus.NO_CONTENT)
+        resp = self.client.delete(url)
+        self.assertEqual(http.HTTPStatus.NO_CONTENT, resp.status_code)
 
-    def test_delete_employee_incorrect_uuid(self):
-        client = self.app.test_client()
+        # test delete employee with incorrect uuid
         url = f'/api/employees/incorrect_uuid'
-        resp = client.delete(url)
-        self.assertEqual(resp.status_code, http.HTTPStatus.NOT_FOUND)
+        resp = self.client.delete(url)
+        self.assertEqual(http.HTTPStatus.NOT_FOUND, resp.status_code)

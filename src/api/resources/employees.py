@@ -14,7 +14,7 @@ class EmployeeListApi(Resource):
     def get(self, uuid=None):
         if uuid is None:
             employees = EmployeeService.get_all()
-            return self.employee_schema.dump(employees, many=True), 200
+            return {'employees': self.employee_schema.dump(employees, many=True)}, 200
         employee = EmployeeService.get_by_uuid(uuid)
         if not employee:
             return {'message': 'object if not found'}, 404
@@ -40,7 +40,6 @@ class EmployeeListApi(Resource):
             return {'message': str(e)}, 400
         if not DepartmentService.get_by_uuid(employee.department_uuid):
             return {'message': "department does not exist"}, 400
-
         EmployeeService.save_to_db(employee)
         return self.employee_schema.dump(employee), 200
 

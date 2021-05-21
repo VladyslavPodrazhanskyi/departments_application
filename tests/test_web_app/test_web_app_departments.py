@@ -3,73 +3,88 @@ import http
 from tests.test_base import BasicTestCase
 
 
-class DepartmentTestCase(BasicTestCase):
+class DepartmentWebTestCase(BasicTestCase):
     def test_display_departments(self):
-        client = self.app.test_client()
+        # test display departments without uuid
         url = '/departments'
-        resp = client.get(url)
-        self.assertEqual(resp.status_code, http.HTTPStatus.OK)
+        resp = self.client.get(url)
+        self.assertEqual(http.HTTPStatus.OK, resp.status_code)
+        self.assertIn('Company Departments:', resp.get_data(as_text=True))
 
-    def test_display_department_correct_uuid(self):
-        url = f'/departments/{self.department_uuids[0]}'
-        client = self.app.test_client()
-        resp = client.get(url)
-        self.assertEqual(resp.status_code, http.HTTPStatus.OK)
+        # test display departments with correct uuid
+        url = f'/departments/{self.department_uuids[1]}'
+        resp = self.client.get(url)
+        self.assertEqual(http.HTTPStatus.OK, resp.status_code)
+        self.assertIn('Sales department', resp.get_data(as_text=True))
+        self.assertIn('Average salary: 21500.0 USD', resp.get_data(as_text=True))
 
-    def test_display_department_incorrect_uuid(self):
+        # test display departments with incorrect uuid
         url = f'/departments/incorrect_uuid'
-        client = self.app.test_client()
-        resp = client.get(url)
-        self.assertEqual(resp.status_code, http.HTTPStatus.NOT_FOUND)
+        resp = self.client.get(url)
+        self.assertEqual(http.HTTPStatus.NOT_FOUND, resp.status_code)
+        self.assertIn('404 PAGE NOT FOUND!', resp.get_data(as_text=True))
 
     def test_create_department(self):
-        client = self.app.test_client()
+        # test get method
+        url = '/create_department'
+        resp = self.client.get(url)
+        self.assertEqual(http.HTTPStatus.OK, resp.status_code)
+        self.assertIn('Add department page', resp.get_data(as_text=True))
+
+        # test method post
         data = {
             'name': 'Test department',
             'description': 'Test description'
         }
-        resp = client.post('/create_department', data=data)
-        self.assertEqual(resp.status_code, http.HTTPStatus.FOUND)
-        # separate for 2 methods (get and post ????)
-        resp = client.get('/create_department', data=data)
-        self.assertEqual(resp.status_code, http.HTTPStatus.OK)
+        resp = self.client.post(url, data=data)
+        self.assertEqual(http.HTTPStatus.FOUND, resp.status_code)
 
-    def test_update_department_correct_uuid(self):
-        client = self.app.test_client()
+    def test_update_department(self):
+        # test get method correct uuid
         url = f'/departments/{self.department_uuids[0]}/update'
+        resp = self.client.get(url)
+        self.assertEqual(http.HTTPStatus.OK, resp.status_code)
+        self.assertIn('Update department page', resp.get_data(as_text=True))
+
+        # test get method incorrect uuid
+        incorrect_url = '/departments/incorrect_uuid/update'
+        resp = self.client.post(incorrect_url)
+        self.assertEqual(http.HTTPStatus.NOT_FOUND, resp.status_code)
+        self.assertIn('404 PAGE NOT FOUND!', resp.get_data(as_text=True))
+
+        # test post method
         data = {
             'name': 'Update department name',
             'description': 'Updated department description'
         }
-        resp = client.post(url, data=data)
-        self.assertEqual(resp.status_code, http.HTTPStatus.FOUND)
-        resp = client.get(url)
-        self.assertEqual(resp.status_code, http.HTTPStatus.OK)
+        resp = self.client.post(url, data=data)
+        self.assertEqual(http.HTTPStatus.FOUND, resp.status_code)
+        # test that the employee was updated
+        url = f'/departments/{self.department_uuids[0]}'
+        resp = self.client.get(url, data=data)
+        self.assertEqual(http.HTTPStatus.OK, resp.status_code)
+        self.assertIn('Update department name', resp.get_data(as_text=True))
 
-    def test_update_department_incorrect_uuid(self):
-        client = self.app.test_client()
-        url = f'/departments/incorrect_uuid/update'
-        data = {
-            'name': 'Update department name',
-            'description': 'Updated department description'
-        }
-        resp = client.post(url, data=data)
-        self.assertEqual(resp.status_code, http.HTTPStatus.NOT_FOUND)
-
-    def test_delete_dep_without_employees(self):
-        client = self.app.test_client()
+    def test_del_department(self):
+        # test delete department without employees
         url = f'/departments/{self.department_uuids[0]}/del'
-        resp = client.post(url)
-        self.assertEqual(resp.status_code, http.HTTPStatus.FOUND)
+        resp = self.client.post(url)
+        self.assertEqual(http.HTTPStatus.FOUND, resp.status_code)
+        # test that department without employees was deleted and is not available
+        url = f'/departments/{self.department_uuids[0]}'
+        resp = self.client.get(url)
+        self.assertEqual(http.HTTPStatus.NOT_FOUND, resp.status_code)
 
-    def test_delete_dep_with_employees(self):
-        client = self.app.test_client()
+        # test delete department with employees
         url = f'/departments/{self.department_uuids[1]}/del'
-        resp = client.post(url)
+        resp = self.client.post(url)
         self.assertEqual(resp.status_code, http.HTTPStatus.FOUND)
+        # test that department with employees was not deleted and is available
+        url = f'/departments/{self.department_uuids[1]}'
+        resp = self.client.get(url)
+        self.assertEqual(http.HTTPStatus.OK, resp.status_code)
 
-    def test_delete_dep_incorrect_uuid(self):
-        client = self.app.test_client()
+        # test delete department with incorrect uuid
         url = f'/departments/incorrect_uuid/del'
-        resp = client.post(url)
-        self.assertEqual(resp.status_code, http.HTTPStatus.NOT_FOUND)
+        resp = self.client.post(url)
+        self.assertEqual(http.HTTPStatus.NOT_FOUND, resp.status_code)

@@ -4,18 +4,18 @@ import json
 from tests.test_base import BasicTestCase
 
 
-class DepartmentTestCase(BasicTestCase):
+class DepartmentApiTestCase(BasicTestCase):
     def test_api_department_get(self):
-        # test get with correct without uuid
+        # test get without uuid
         url_without_uuid = '/api/departments/'
         resp = self.client.get(url_without_uuid)
-        self.assertEqual(resp.status_code, http.HTTPStatus.OK)
-        self.assertIn('departments', resp.json)
+        self.assertEqual(http.HTTPStatus.OK, resp.status_code)
+        self.assertIn("departments", resp.json)
 
         # test get with correct uuid
         url_with_correct_uuid = f'/api/departments/{self.department_uuids[0]}'
         resp = self.client.get(url_with_correct_uuid)
-        self.assertEqual(resp.status_code, http.HTTPStatus.OK)
+        self.assertEqual(http.HTTPStatus.OK, resp.status_code)
         self.assertEqual('Business development', resp.json.get('name'))
 
         # test get with incorrect uuid
@@ -31,9 +31,10 @@ class DepartmentTestCase(BasicTestCase):
             'description': 'Test description'
         }
         resp = self.client.post(url, data=json.dumps(correct_data), content_type='application/json')
-        self.assertEqual(http.HTTPStatus.CREATED,  resp.status_code)
-        self.assertEqual(resp.json['name'], 'Test department')
-        self.assertEqual(resp.json['description'], 'Test description')
+        self.assertEqual(http.HTTPStatus.CREATED, resp.status_code)
+        self.assertEqual('Test department', resp.json['name'])
+        self.assertEqual('Test description', resp.json['description'])
+
         # test post with incorrect data
         incorrect_data = {
             'incorrect_field': 'Test department',
@@ -80,7 +81,7 @@ class DepartmentTestCase(BasicTestCase):
         self.assertEqual(http.HTTPStatus.FORBIDDEN, resp.status_code)
         self.assertEqual("department with employees can't be deleted!", resp.json.get('message'))
 
-        # test delete department with employees
+        # test delete department with incorrect uuid
         url = f'/api/departments/incorrect_uuid'
         resp = self.client.delete(url)
         self.assertEqual(http.HTTPStatus.NOT_FOUND, resp.status_code)
