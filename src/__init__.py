@@ -7,6 +7,8 @@ db = SQLAlchemy()
 
 
 def create_app(config_name):
+    """ Factory function create and configure an instance of flask application."""
+
     app = Flask(__name__)
     app.config.from_object(config[config_name])
 
@@ -22,7 +24,6 @@ def create_app(config_name):
     app.register_blueprint(department_bp)
     app.register_blueprint(employee_bp)
 
+    from src.models import models
+
     return app
-
-
-from src.models import models

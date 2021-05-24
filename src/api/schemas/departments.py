@@ -1,3 +1,5 @@
+# src/schemas/departments.py
+
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
 from marshmallow_sqlalchemy.fields import Nested
 
@@ -5,6 +7,11 @@ from src.models.models import Department
 
 
 class DepartmentSchema(SQLAlchemyAutoSchema):
+    """Schema used in the department rest service for :
+     - validation data
+     - serialization
+     - deserialization
+     """
     name = auto_field()
     description = auto_field()
     uuid = auto_field()

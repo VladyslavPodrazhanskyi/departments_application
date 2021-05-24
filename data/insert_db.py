@@ -6,7 +6,8 @@ from src import db
 from src.models.models import Department, Employee
 
 
-def populate_departments():
+def populate_departments() -> None:
+    """Creates instances of class Department,add them to the database and commit changes."""
 
     d0 = Department(
         name='Business development',
@@ -42,7 +43,9 @@ def populate_departments():
     db.session.close()
 
 
-def populate_employees():
+def populate_employees() -> None:
+    """Creates 7 instances of class Employee,add them to the database and commit changes."""
+
     e1 = Employee(
         employee_name='Irina Kulikova',
         birth_date=date(1986, 7, 2),

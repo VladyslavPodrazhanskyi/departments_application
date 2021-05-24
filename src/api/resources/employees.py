@@ -1,4 +1,5 @@
-import datetime
+# src/api/resources/employees.py
+
 from flask import request
 from flask_restful import Resource
 from src import db
@@ -9,9 +10,12 @@ from marshmallow import ValidationError
 
 
 class EmployeeListApi(Resource):
+    """ Employee REST resource. """
+
     employee_schema = EmployeeSchema()
 
     def get(self, uuid=None):
+        """ Methog get """
         if uuid is None:
             employees = EmployeeService.get_all()
             return {'employees': self.employee_schema.dump(employees, many=True)}, 200
@@ -21,6 +25,7 @@ class EmployeeListApi(Resource):
         return self.employee_schema.dump(employee), 200
 
     def post(self):
+        """ Methog post """
         try:
             employee = self.employee_schema.load(request.json, session=db.session)
         except ValidationError as e:
@@ -31,6 +36,7 @@ class EmployeeListApi(Resource):
         return self.employee_schema.dump(employee), 201
 
     def put(self, uuid):
+        """ Methog put """
         employee = EmployeeService.get_by_uuid(uuid)
         if not employee:
             return {'message': 'object if not found'}, 404
@@ -44,6 +50,7 @@ class EmployeeListApi(Resource):
         return self.employee_schema.dump(employee), 200
 
     def delete(self, uuid):
+        """ Methog delete """
         employee = EmployeeService.get_by_uuid(uuid)
         if not employee:
             return {'message': f'employee with name {uuid} does not exist'}, 404

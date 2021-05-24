@@ -1,17 +1,22 @@
+# src/api/resources/departments.py
+
 from flask import request
 from flask_restful import Resource
 from marshmallow import ValidationError
-# from sqlalchemy.orm import joinedload, selectinload
 from src import db
+
 from src.api.schemas.departments import DepartmentSchema
 
 from src.services.department import DepartmentService
 
 
 class DepartmentListApi(Resource):
+    """ Department REST resource. """
+
     department_schema = DepartmentSchema()
 
     def get(self, uuid=None):
+        """ Methog get """
         if uuid is None:
             departments = DepartmentService.get_all()
             return {'departments': self.department_schema.dump(departments, many=True)}, 200
@@ -21,6 +26,7 @@ class DepartmentListApi(Resource):
         return self.department_schema.dump(department), 200
 
     def post(self):
+        """ Methog post """
         try:
             department = self.department_schema.load(request.json, session=db.session)
         except ValidationError as e:
@@ -29,6 +35,7 @@ class DepartmentListApi(Resource):
         return self.department_schema.dump(department), 201
 
     def put(self, uuid):
+        """ Methog put """
         department = DepartmentService.get_by_uuid(uuid)
         if not department:
             return {'message': 'object is not found'}, 404
@@ -40,6 +47,7 @@ class DepartmentListApi(Resource):
         return self.department_schema.dump(department), 200
 
     def delete(self, uuid):
+        """ Methog delete """
         department = DepartmentService.get_by_uuid(uuid)
         if not department:
             return {'message': 'object is not found'}, 404

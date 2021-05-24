@@ -1,10 +1,6 @@
-# employee/views
-from datetime import date
-from flask import (Blueprint, render_template, request,
-                   url_for, redirect, abort, flash)
+from flask import (render_template, url_for,
+                   redirect, abort, flash)
 
-from src import db
-from src.models.models import Employee, Department
 from src.web_application.employee import employee_bp
 
 from src.web_application.forms import EmployeeForm, EmployeeSearchForm
