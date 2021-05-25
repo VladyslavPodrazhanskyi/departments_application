@@ -30,7 +30,8 @@ class EmployeeService(Base):
             end_date (str): Format (year-month-day)  - optional argument
 
         Returns:
-            list: list of employees that were born on start_date or in the period between dates.
+            list: list of employees that were born on start_date or
+            in the period between dates.
 
         It is possible to search by exact date (fill only start_date),
         or in the period between dates (fill start_date and end_date)

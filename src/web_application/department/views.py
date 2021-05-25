@@ -1,4 +1,4 @@
-# department/views
+# src/web_application/department/views.py
 
 from flask import (render_template, flash, url_for,
                    redirect, request, abort)
@@ -12,6 +12,11 @@ from src.services.department import DepartmentService
 @department_bp.route('/departments')
 @department_bp.route('/departments/<string:uuid>')
 def display_departments(uuid=None):
+    """View function for departments:
+
+    - display page of list of departments;
+    - display page of department by uuid.
+    """
     if uuid:
         department = DepartmentService.get_by_uuid(uuid)
         if not department:
@@ -26,6 +31,7 @@ def display_departments(uuid=None):
 # create  a department
 @department_bp.route('/create_department', methods=["POST", "GET"])
 def create_department():
+    """ View function for create department. """
     form = DepartmentForm()
     if form.validate_on_submit():
         department_data = {
@@ -40,9 +46,9 @@ def create_department():
 
 
 # update the department
-
 @department_bp.route('/departments/<string:uuid>/update', methods=["POST", "GET"])
 def update_department(uuid):
+    """ View function for update department. """
     department = DepartmentService.get_by_uuid(uuid)
     if not department:
         abort(404)
@@ -58,6 +64,7 @@ def update_department(uuid):
 
 @department_bp.route('/departments/<string:uuid>/del', methods=["POST", "GET"])
 def del_department(uuid):
+    """ View function for delete department. """
     department = DepartmentService.get_by_uuid(uuid)
     if not department:
         abort(404)

@@ -56,5 +56,3 @@ class Base:
         """ Takes object of class db model and delete it from db """
         db.session.delete(obj)
         db.session.commit()
-
-

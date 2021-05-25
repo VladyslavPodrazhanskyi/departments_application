@@ -15,7 +15,7 @@ script:
   - coverage run --source="src/" -m unittest discover tests -v && coverage html
   - coverage report
 # check style
-  - pycodestyle src/ --ignore=E722,E501,E402
+  - pycodestyle src/ --ignore=E501,E402
 
 after_success:
   - codecov

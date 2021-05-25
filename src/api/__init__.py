@@ -1,3 +1,5 @@
+# src/api/schemas/__init__.py
+
 from flask import Blueprint
 from flask_restful import Api
 

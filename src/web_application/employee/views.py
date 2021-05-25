@@ -1,3 +1,5 @@
+# src/web_application/employee/views.py
+
 from flask import (render_template, url_for,
                    redirect, abort, flash)
 
@@ -12,6 +14,11 @@ from src.services.employee import EmployeeService
 @employee_bp.route('/employees/<string:uuid>', methods=["GET", "POST"])
 @employee_bp.route('/employees', methods=["GET", "POST"])
 def display_employees(uuid=None):
+    """View function for employees:
+
+    - display page of list of employees, form for search of employess by birth date;
+    - display page of employee by uuid.
+    """
     if uuid:
         employee = EmployeeService.get_by_uuid(uuid)
         if not employee:
@@ -31,6 +38,7 @@ def display_employees(uuid=None):
 @employee_bp.route('/employees/search_results/<start_date>')
 @employee_bp.route('/employees/search_results/<start_date>/<end_date>')
 def search_by_bd(start_date, end_date=None):
+    """ View function for display page with search result of  employees by birth date. """
     employees = EmployeeService.search_employee(start_date, end_date)
     return render_template(
         'employee_search_results.html',
@@ -41,6 +49,7 @@ def search_by_bd(start_date, end_date=None):
 # create employee
 @employee_bp.route('/create_employee', methods=["POST", "GET"])
 def create_employee():
+    """ View function for create employee. """
     form = EmployeeForm()
     if form.validate_on_submit():
         employee_data = {
@@ -62,6 +71,7 @@ def create_employee():
 # update the employee
 @employee_bp.route('/employees/<string:uuid>/update', methods=["POST", "GET"])
 def update_employee(uuid):
+    """ View function for update employee. """
     employee = EmployeeService.get_by_uuid(uuid)
     if not employee:
         abort(404)
@@ -81,8 +91,9 @@ def update_employee(uuid):
 
 
 # delete the employee
-@employee_bp.route('/employees/<string:uuid>/delete', methods=["POST", "GET"])  # user delete method then
+@employee_bp.route('/employees/<string:uuid>/delete', methods=["POST", "GET"])
 def del_employee(uuid):
+    """ View function for delete employee. """
     employee = EmployeeService.get_by_uuid(uuid)
     if not employee:
         abort(404)

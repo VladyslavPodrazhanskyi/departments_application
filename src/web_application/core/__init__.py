@@ -1,3 +1,5 @@
+# src/web_application/core/__init__.py
+
 from flask import Blueprint
 
 core = Blueprint('core', __name__)
