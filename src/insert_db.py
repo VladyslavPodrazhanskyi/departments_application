@@ -99,7 +99,7 @@ def populate_employees() -> None:
 
 
 if __name__ == '__main__':
-    app = create_app('development')
+    app = create_app((os.environ.get('FLASK_CONFIG')))
     app_context = app.app_context()
     app_context.push()
     print('Populating db with departments....')
