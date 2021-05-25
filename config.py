@@ -27,8 +27,8 @@ class DevelopmentConfig(Config):
     PG_HOST = "localhost"
     PG_PORT = 5432
     DB_NAME = "departments_db"
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') #or \
-    #                           f"postgresql://{PG_USER}:{PG_PASSWORD}@{PG_HOST}:{PG_PORT}/{DB_NAME}"
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
+                              f"postgresql://{PG_USER}:{PG_PASSWORD}@{PG_HOST}:{PG_PORT}/{DB_NAME}"
 
 
 class TestingConfig(Config):
