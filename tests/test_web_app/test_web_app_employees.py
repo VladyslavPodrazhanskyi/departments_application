@@ -6,11 +6,21 @@ from tests.test_base import BasicTestCase
 
 
 class EmployeesTestCase(BasicTestCase):
-    """Test case for testing get, post, put, delete methods
-    of the Employees resource of the Rest API.
+    """
+    Test case for testing all the functions and pages of the web application
+    connected with Employee model, includes following test methods:
+
+     -  test_display_employees;
+     -  test_create_employee;
+     -  test_update_employee;
+     -  test_delete_employee;
+     -  test_search_employee.
     """
 
     def test_display_employees(self):
+        """ Test of the view function display_employees
+          of the the web application.
+        """
         # test display employees without uuid
         url = '/employees'
         resp = self.client.get(url)
@@ -31,6 +41,9 @@ class EmployeesTestCase(BasicTestCase):
         self.assertIn('404 PAGE NOT FOUND!', resp.get_data(as_text=True))
 
     def test_create_employee(self):
+        """ Test of the view function create_employee
+          of the the web application.
+        """
         # test get method
         url = '/create_employee'
         resp = self.client.get(url)
@@ -59,6 +72,9 @@ class EmployeesTestCase(BasicTestCase):
         self.assertIn('input the correct uuid of the department', resp.get_data(as_text=True))
 
     def test_update_employee(self):
+        """ Test of the view function update_employee
+          of the the web application.
+        """
         # test get method correct uuid
         url = f'/employees/{self.employee_uuids[0]}/update'
         resp = self.client.get(url)
@@ -100,6 +116,9 @@ class EmployeesTestCase(BasicTestCase):
         self.assertIn('message: input the correct uuid of the department', resp.get_data(as_text=True))
 
     def test_delete_employee(self):
+        """ Test of the view function del_employee
+          of the the web application.
+        """
         # test delete existing employees
         url = f'/employees/{self.employee_uuids[0]}/delete'
         resp = self.client.post(url)
@@ -116,6 +135,9 @@ class EmployeesTestCase(BasicTestCase):
         self.assertEqual(http.HTTPStatus.NOT_FOUND, resp.status_code)
 
     def test_search_employee(self):
+        """ Test of the view function search_by_bd
+          of the the web application.
+        """
         # search by start_date only
         url_search = '/employees'
         data = {'start_date': '1986-07-02'}

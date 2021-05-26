@@ -6,7 +6,9 @@ from tests.test_base import BasicTestCase
 
 
 class HomeTestCase(BasicTestCase):
-    """ Test of the home page of the web application. """
+    """ Test of view function index of the the web application.
+    (home page)
+    """
 
     def test_home(self):
         resp = self.client.get('/')

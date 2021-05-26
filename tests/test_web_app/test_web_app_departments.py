@@ -14,12 +14,12 @@ class DepartmentWebTestCase(BasicTestCase):
      -  test_create_department;
      -  test_update_department;
      -  test_del_department.
-
     """
+
     def test_display_departments(self):
-        """ Testing the pages with list of all the departments
-         and page of separate department
-         """
+        """ Test of the view function display_departments
+          of the the web application.
+        """
         # test display departments without uuid
         url = '/departments'
         resp = self.client.get(url)
@@ -40,6 +40,9 @@ class DepartmentWebTestCase(BasicTestCase):
         self.assertIn('404 PAGE NOT FOUND!', resp.get_data(as_text=True))
 
     def test_create_department(self):
+        """ Test of the view function create_department
+          of the the web application.
+        """
         # test get method
         url = '/create_department'
         resp = self.client.get(url)
@@ -55,6 +58,9 @@ class DepartmentWebTestCase(BasicTestCase):
         self.assertEqual(http.HTTPStatus.FOUND, resp.status_code)
 
     def test_update_department(self):
+        """ Test of the view function update_department
+          of the the web application.
+        """
         # test get method correct uuid
         url = f'/departments/{self.department_uuids[0]}/update'
         resp = self.client.get(url)
@@ -81,6 +87,9 @@ class DepartmentWebTestCase(BasicTestCase):
         self.assertIn('Update department name', resp.get_data(as_text=True))
 
     def test_del_department(self):
+        """ Test of the view function del_department
+          of the the web application.
+        """
         # test delete department without employees
         url = f'/departments/{self.department_uuids[0]}/del'
         resp = self.client.post(url)
