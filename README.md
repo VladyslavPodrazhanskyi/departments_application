@@ -29,14 +29,25 @@ Perform following steps to build and run the project:
 
 •	clone this repo:
  $ git clone https://github.com/VladyslavPodrazhanskyi/departments_application.git
+ 
 •	make project folder current:
 $ cd department_application
+
 •	create Python virtual environment:
-$ python3 -m venv venv
+$ python3.8 -m venv venv
+
 •	activate virtual environment:
 $ source venv/bin/activate
+
 •	install project requirements:
 $ pip install -r requirements.txt
+
+•	run application locally:
+$ flask run
+
+•	run all tests :
+$ python -m unittest discover tests -v
+
 
 
 

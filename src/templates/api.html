@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Home page{% endblock %}
+{% block content %}
+    <div class="p-3 mb-2 bg-light text-dark">
+        <h4>Api rest service</h4>
+    <hr>
+    <h6>REST API service for third-party developers has 2 resources: </h6>
+    <h6>1) Departments:</h6>
+    <p>1.1. access to the collection of the departments of the company:</p>
+    <p>base-url<span style="color: #2330ff">/api/departments/</span> - method get</p>
+    <p>1.2. access to the department by its uuid:</p>
+    <p>base-url<span style="color: #2330ff">/api/departments/uuid</span>  - methods get, post, put, delete</p>
+    <h6>2) Employees:</h6>
+    <p>2.1. access to the collection of the employees of the company:</p>
+    <p>base-url<span style="color: #2330ff">/api/employees/</span> - method get</p>
+    <p>2.2. access to the employee by its uuid:</p>
+    <p>base-url<span style="color: #2330ff">/api/employees/uuid</span>  - methods get, post, put, delete</p>
+    </div>
+{% endblock %}
+
+
