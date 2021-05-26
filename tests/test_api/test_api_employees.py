@@ -1,3 +1,5 @@
+# tests/test_api/test_api_employees.py
+
 import http
 import json
 
@@ -8,7 +10,12 @@ from src.models.models import Department
 
 
 class EmployeeApiTestCase(BasicTestCase):
+    """Test case for testing get, post, put, delete methods
+    of the Employees resource of the Rest API.
+    """
+
     def test_api_employee_get(self):
+        """ Test of the method get. """
         # test get without uui
         url_without_uuid = '/api/employees/'
         resp = self.client.get(url_without_uuid)
@@ -28,6 +35,7 @@ class EmployeeApiTestCase(BasicTestCase):
         self.assertEqual(http.HTTPStatus.NOT_FOUND, resp.status_code)
 
     def test_api_employee_post(self):
+        """ Test of the method post. """
         # test post with correct data
         url = '/api/employees'
         data = {
@@ -64,6 +72,7 @@ class EmployeeApiTestCase(BasicTestCase):
         self.assertEqual(http.HTTPStatus.BAD_REQUEST, resp.status_code)
 
     def test_api_employee_put(self):
+        """ Test of the method put. """
         # test put with incorrect data
         url = f'/api/employees/{self.employee_uuids[0]}'
         data = {
@@ -105,6 +114,7 @@ class EmployeeApiTestCase(BasicTestCase):
         self.assertEqual("department does not exist", resp.json.get('message'))
 
     def test_delete_employee(self):
+        """ Test of the method delete. """
         # test delete employee with correct uuid
         url = f'/api/employees/{self.employee_uuids[0]}'
         resp = self.client.delete(url)

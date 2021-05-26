@@ -1,9 +1,15 @@
+# test/test_web_app/test_web_app_employees.py
+
 import http
 
 from tests.test_base import BasicTestCase
 
 
 class EmployeesTestCase(BasicTestCase):
+    """Test case for testing get, post, put, delete methods
+    of the Employees resource of the Rest API.
+    """
+
     def test_display_employees(self):
         # test display employees without uuid
         url = '/employees'

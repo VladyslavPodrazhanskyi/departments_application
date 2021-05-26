@@ -1,10 +1,25 @@
+# test/test_web_app/test_web_app_departments.py
+
 import http
 
 from tests.test_base import BasicTestCase
 
 
 class DepartmentWebTestCase(BasicTestCase):
+    """
+    Test case for testing all the functions and pages of the web application
+    connected with Department model, includes following test methods:
+
+     -  test_display_departments;
+     -  test_create_department;
+     -  test_update_department;
+     -  test_del_department.
+
+    """
     def test_display_departments(self):
+        """ Testing the pages with list of all the departments
+         and page of separate department
+         """
         # test display departments without uuid
         url = '/departments'
         resp = self.client.get(url)

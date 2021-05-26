@@ -1,3 +1,5 @@
+# tests/test_api/test_api_departments.py
+
 import http
 import json
 
@@ -5,7 +7,12 @@ from tests.test_base import BasicTestCase
 
 
 class DepartmentApiTestCase(BasicTestCase):
+    """Test case for testing get, post, put, delete methods
+    of the Departments resource of the Rest API.
+    """
+
     def test_api_department_get(self):
+        """ Test of the method get. """
         # test get without uuid
         url_without_uuid = '/api/departments/'
         resp = self.client.get(url_without_uuid)
@@ -24,6 +31,7 @@ class DepartmentApiTestCase(BasicTestCase):
         self.assertEqual(http.HTTPStatus.NOT_FOUND, resp.status_code)
 
     def test_api_department_post(self):
+        """ Test of the method post. """
         # test post with correct data
         url = '/api/departments/'
         correct_data = {
@@ -44,6 +52,7 @@ class DepartmentApiTestCase(BasicTestCase):
         self.assertEqual(http.HTTPStatus.BAD_REQUEST, resp.status_code)
 
     def test_api_department_put(self):
+        """ Test of the method put. """
         # test put with correct uuid and data
         url_correct_uuid = f'/api/departments/{self.department_uuids[0]}'
         correct_data = {
@@ -70,6 +79,7 @@ class DepartmentApiTestCase(BasicTestCase):
         self.assertEqual(http.HTTPStatus.NOT_FOUND, resp.status_code)
 
     def test_api_department_delete(self):
+        """ Test of the method delete. """
         # test delete department without employees
         url_without_employees = f'/api/departments/{self.department_uuids[0]}'
         resp = self.client.delete(url_without_employees)
