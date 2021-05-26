@@ -10,6 +10,12 @@ def index():
     return render_template('index.html')
 
 
+@core.route('/api')
+def api():
+    """ View function for API page. """
+    return render_template('api.html')
+
+
 @core.app_errorhandler(404)
 def error_404(error):
     """ View function for page error 404. """
