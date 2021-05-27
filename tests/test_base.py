@@ -4,7 +4,7 @@ import unittest
 from src import create_app, db
 from src.services.department import DepartmentService
 from src.services.employee import EmployeeService
-from src.insert_db import populate_departments, populate_employees
+from data.insert_db import populate_departments, populate_employees
 
 
 class BasicTestCase(unittest.TestCase):
