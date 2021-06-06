@@ -21,8 +21,8 @@ class Department(db.Model):
         self.description = description
         self.uuid = str(uuid.uuid4())
 
-    def __repr__(self):
-        return f"Department(name: {self.name}, uuid: {self.uuid}, employees: {self.department_employees})"
+    # def __repr__(self):
+    #     return f"Department(name: {self.name}, uuid: {self.uuid}, employees: {self.department_employees})"
 
 
 class Employee(db.Model):
@@ -44,5 +44,5 @@ class Employee(db.Model):
         self.department_uuid = department_uuid
         self.uuid = str(uuid.uuid4())
 
-    def __repr__(self):
-        return f"Employee({self.employee_name}, {self.birth_date}, {self.salary}, {self.uuid})"
+    # def __repr__(self):
+    #     return f"Employee({self.employee_name}, {self.birth_date}, {self.salary}, {self.uuid})"
